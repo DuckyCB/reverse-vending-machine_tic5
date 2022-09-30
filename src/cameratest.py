@@ -1,6 +1,6 @@
 import cv2
 
-if __name__ == '__main__':
+def camera_test():
     camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     
     camera.set(cv2.CAP_PROP_FPS, 30.0)
