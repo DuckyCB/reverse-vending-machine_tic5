@@ -3,10 +3,8 @@ import RPi.GPIO as GPIO
 in1 = 24
 in2 = 23
 en = 25
-GPIO.cleanup()
 
-
-class Motordriver:
+class MotorDriver:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(in1, GPIO.OUT)
@@ -24,6 +22,3 @@ class Motordriver:
     def stop_motors(self):
         GPIO.output(in1, GPIO.LOW)
         GPIO.output(in2, GPIO.LOW)
-
-def rotation():
-    pass

@@ -1,7 +1,7 @@
 import os
 
 def welcome():
-    os.system('cls' if os.name=='nt' else 'clear')
+    #os.system('cls' if os.name=='nt' else 'clear')
     print('''
 Welcome to Reverse Vending Machine
                                     .           .           

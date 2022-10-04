@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Union
 import cv2 as cv
 from pyzbar import pyzbar
 import numpy as np
@@ -50,7 +50,7 @@ class Camera:
         cv.destroyAllWindows()
 
 
-def read_barcodes(frame: np.array) -> Any | None:
+def read_barcodes(frame: np.array):
     barcodes = pyzbar.decode(frame)
     # return None if not any(barcodes) else barcodes[0]
     return barcodes[0] if any(barcodes) else None
