@@ -22,6 +22,6 @@ class ObjectDetector:
         """Reads input from sensor module in raspberry pi.
 
         :return:
-        1 if an object is detected 0 otherwise.
+        True if an object is detected False otherwise.
         """
-        return GPIO.input(self.sensor_pin)
+        return not GPIO.input(self.sensor_pin)
