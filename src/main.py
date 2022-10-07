@@ -60,11 +60,12 @@ def main():
         barcode = None
         i = 0
         while i < 5 and barcode is None:
-            barcode, frame = get_barcode(camera)
+            barcode, frame = get_barcode(camera, show_camera)
             rotate(motor_driver, camera, show_camera)
             i += 1
 
         if barcode is not None:
+            print(barcode)
             save_data(camera, frame, barcode)
 
         release_camera(camera)

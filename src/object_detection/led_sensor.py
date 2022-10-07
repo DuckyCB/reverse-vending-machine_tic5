@@ -24,4 +24,4 @@ class ObjectDetector:
         :return:
         True if an object is detected False otherwise.
         """
-        return not GPIO.input(self.sensor_pin)
+        return GPIO.input(self.sensor_pin)

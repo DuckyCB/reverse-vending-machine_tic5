@@ -1,16 +1,20 @@
 import cv2 as cv
 import numpy as np
 from pyzbar import pyzbar
+from constants import OUTPUT_FILE_DIR
+import os
 
 
 def start_camera() -> None:
     print('Starting camera...')
-    camera = cv.VideoCapture(1, cv.CAP_DSHOW)
+    camera = cv.VideoCapture(-1)
+    # camera = cv.VideoCapture(0, cv.CAP_DSHOW)
     camera.set(cv.CAP_PROP_FPS, 30.0)
     camera.set(cv.CAP_PROP_FOURCC, cv.VideoWriter.fourcc('m', 'j', 'p', 'g'))
     camera.set(cv.CAP_PROP_FOURCC, cv.VideoWriter.fourcc('M', 'J', 'P', 'G'))
-    camera.set(cv.CAP_PROP_FRAME_WIDTH, 1920)
-    camera.set(cv.CAP_PROP_FRAME_HEIGHT, 1080)
+    # camera.set(cv.CAP_PROP_FRAME_WIDTH, 1920)
+    # camera.set(cv.CAP_PROP_FRAME_HEIGHT, 1080)
+    camera.set(cv.CAP_PROP_BUFFERSIZE, 1)
     return camera
 
 def append_barcode_to_frame(frame: np.array, barcode) -> np.array:
@@ -53,9 +57,12 @@ class Camera:
 
 
     def display_img(self, frame: np.array, barcode):
-        if barcode is not None:
-            frame = append_barcode_to_frame(frame, barcode)
+        # if barcode is not None:
+        #     frame = append_barcode_to_frame(frame, barcode)
+        print(frame.shape)
         cv.imshow('Barcode/QR code reader', frame)
+        if cv.waitKey(1) & 0xFF == 27:
+            return
 
     
     def release(self):
@@ -64,10 +71,13 @@ class Camera:
 
     
     def save_picture(self, frame: np.array, current_time: str, barcode: str):
+        path = OUTPUT_FILE_DIR
+        img_file = os.path.join(path, f"img/{current_time}.jpg")
+        barcode_file = os.path.join(path, f"barcode/{current_time}.txt")
         try:
-            cv.imwrite(f"output/{current_time}.jpg", frame)
-            with open(f"output/{current_time}.txt", mode='w') as fp:
-                fp.write(f"{barcode} {current_time}")
+            cv.imwrite(img_file, frame)
+            with open(barcode_file, mode='w') as fp:
+                fp.write(f"{barcode.data.decode()} {current_time}")
                 print("data successfully saved")
         except cv.error:
             print('error saving picture')

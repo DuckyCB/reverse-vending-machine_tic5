@@ -11,7 +11,7 @@ def init_led_sensor(sensor_pin: int=17) -> ObjectDetector:
 
 
 def await_obj_state(detector: ObjectDetector, state: str) -> None:
-    states_dict = {"no_obj": False, "obj": True}
+    states_dict = {"no_obj": 0, "obj": 1}
 
     detections_left = n_of_detections
     while detections_left > 0:

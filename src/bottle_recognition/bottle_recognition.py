@@ -21,7 +21,7 @@ def rotate(motor_driver: MotorDriver, camera: Union[Camera, None], show_camera: 
 
     start = perf_counter()
     current_time = perf_counter()
-    while current_time - start < .3:
+    while current_time - start < 1:
         if show_camera and Camera is not None:
             _, frame = camera.read_frame()
             camera.display_img(frame, None)
