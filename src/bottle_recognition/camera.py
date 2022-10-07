@@ -59,7 +59,7 @@ class Camera:
     def display_img(self, frame: np.array, barcode):
         # if barcode is not None:
         #     frame = append_barcode_to_frame(frame, barcode)
-        print(frame.shape)
+        print(frame.shape, 'messi')
         cv.imshow('Barcode/QR code reader', frame)
         if cv.waitKey(1) & 0xFF == 27:
             return

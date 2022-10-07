@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 from welcome import welcome
 # from camera import Camera, save_picture
 # from object_detection.led_sensor import ObjectDetector
-from bottle_recognition.bottle_recognition import get_barcode, rotate, start_camera, init_motor_driver, release_camera, save_data
+from bottle_recognition.bottle_recognition import get_barcode, rotate_and_detect, start_camera, init_motor_driver, release_camera, save_data
 from object_detection.object_detection import await_no_obj_detection, await_obj_detection, init_led_sensor
 # from rotation import MotorDriver
 # from time import sleep
@@ -59,13 +59,14 @@ def main():
         camera = start_camera()
         barcode = None
         i = 0
-        while i < 5 and barcode is None:
-            barcode, frame = get_barcode(camera, show_camera)
-            rotate(motor_driver, camera, show_camera)
+        while i < 50 and barcode is None:
+            # barcode, frame = get_barcode(camera, show_camera)
+            # rotate(motor_driver, camera, show_camera)
+            barcode, frame = rotate_and_detect(motor_driver, camera, show_camera)
             i += 1
 
         if barcode is not None:
-            print(barcode)
+            print(barcode, 'success')
             save_data(camera, frame, barcode)
 
         release_camera(camera)

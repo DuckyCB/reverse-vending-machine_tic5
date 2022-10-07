@@ -16,19 +16,33 @@ def get_barcode(camera: Camera, show_camera: bool=True):
     return None, None
 
 
-def rotate(motor_driver: MotorDriver, camera: Union[Camera, None], show_camera: bool=True):
+def rotate_and_detect(motor_driver: MotorDriver, camera: Camera, show_camera: bool=True):
     motor_driver.start_motors()
 
-    start = perf_counter()
-    current_time = perf_counter()
-    while current_time - start < 1:
-        if show_camera and Camera is not None:
-            _, frame = camera.read_frame()
-            camera.display_img(frame, None)
-        current_time = perf_counter()
+    # start = perf_counter()
+    # current_time = perf_counter()
+    # while current_time - start < 0.5:
+    #     if show_camera and Camera is not None:
+    #         _, frame = camera.read_frame()
+    #         camera.display_img(frame, None)
+    #     current_time = perf_counter()
+    barcode, frame = delay_and_detect(.5, camera, show_camera)
     
     motor_driver.stop_motors()
+    
+    return (barcode, frame) if barcode is not None else delay_and_detect(.5, camera, show_camera)
 
+def delay_and_detect(time: float, camera: Camera, show_camera: bool) -> None:
+    start = perf_counter()
+    current_time = perf_counter()
+    while current_time - start < time:
+        barcode, frame = get_barcode(camera, show_camera)
+        print(f"barcode: {barcode}")
+        if barcode is not None:
+            return barcode, frame
+        current_time = perf_counter()
+    
+    return None, None
 
 
 def start_camera() -> Camera:
