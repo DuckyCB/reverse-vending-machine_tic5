@@ -1,4 +1,3 @@
-from datetime import datetime
 from time import perf_counter
 from typing import Union
 
@@ -62,6 +61,5 @@ def release_camera(camera: Camera) -> None:
     camera.release()
 
 
-def save_data(camera: Camera, frame: np.array, barcode: str) -> None:
-    current_time = datetime.now().strftime("%d_%m_%Y-%H_%M_%S")
-    camera.save_picture(frame, current_time, barcode)
+def save_picture(camera: Camera, frame: np.array, barcode: str, time: str) -> None:
+    camera.save_picture(frame, time, barcode)
