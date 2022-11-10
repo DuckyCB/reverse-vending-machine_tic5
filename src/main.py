@@ -6,7 +6,7 @@ from welcome import welcome
 # from camera import Camera, save_picture
 # from object_detection.led_sensor import ObjectDetector
 from bottle_recognition.bottle_recognition import get_barcode, rotate_and_detect, start_camera, init_motor_driver, release_camera, save_data
-from object_detection.object_detection import await_no_obj_detection, await_obj_detection, init_led_sensor
+from object_detection.object_detection import await_no_obj_detection, await_obj_detection, init_led_sensor, init_scale, detect_weight
 # from rotation import MotorDriver
 # from time import sleep
 
@@ -53,8 +53,10 @@ def main():
     welcome()
     motor_driver = init_motor_driver()
     detector = init_led_sensor(sensor_pin=17)
+    scale = init_scale(sck=5, dt=6)
+    threshold = 10
     while True:
-        await_obj_detection(detector)
+        await_obj_detection(detector, scale, threshold)
 
         camera = start_camera()
         barcode = None
@@ -66,11 +68,12 @@ def main():
             i += 1
 
         if barcode is not None:
+            weight = detect_weight(scale)
             print(barcode, 'success')
             save_data(camera, frame, barcode)
 
         release_camera(camera)
-        await_no_obj_detection(detector)
+        await_no_obj_detection(detector, scale, threshold)
 
 
 if __name__ == '__main__':
