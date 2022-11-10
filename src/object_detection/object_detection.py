@@ -34,10 +34,10 @@ def object_not_placed(scale: Scale, threshold: float):
 def await_obj_state(detector: ObjectDetector, state: str, scale: Scale, threshold: float) -> None:
     states_dict = {"no_obj": [0, object_not_placed], "obj": [1, object_placed]}
 
-    detections_left = n_of_led_detections
-    while detections_left > 0:
-        if detector.read_input() == states_dict[state][0]:
-            detections_left -= 1
+    # detections_left = n_of_led_detections
+    # while detections_left > 0:
+    #     if detector.read_input() == states_dict[state][0]:
+    #         detections_left -= 1
     
     detections_left = n_of_scale_detections
     while detections_left > 0:

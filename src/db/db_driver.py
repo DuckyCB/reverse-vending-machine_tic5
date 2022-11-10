@@ -2,7 +2,7 @@ import sqlite3
 from sqlite3 import Error
 
 
-def create_connection(db_file='src/db/rvm.db': str):
+def create_connection(db_file: str='src/db/rvm.db'):
     conn = None
     try:
         conn = sqlite3.connect(db_file)
@@ -21,8 +21,9 @@ def query_post(conn, query: str):
     conn.commit()
 
 
-def query_post_data(conn, query: str, data: Bottle[]):
+def query_post_data(conn, query, data):
     cur = conn.cursor()
+    print(query, data)
     res = cur.executemany(query, data)
     conn.commit()
 

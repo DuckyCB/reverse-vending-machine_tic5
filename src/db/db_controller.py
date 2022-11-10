@@ -1,4 +1,5 @@
 from db.db_driver import *
+from objects.Bottle import Bottle
 
 
 def generate_tables():
