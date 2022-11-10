@@ -130,3 +130,7 @@ dmypy.json
 
 #output
 output/
+src/db/rvm.db
+
+# Jetbrains
+.idea/

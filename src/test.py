@@ -1,11 +1,19 @@
-import requests
+# import requests
+from objects.Bottle import Bottle
+from db.db_controller import save_bottle, generate_tables
 
-x = requests.get('http://localhost:3000/')
+def test_backend_connection():
+    x = requests.get('http://localhost:3000/')
+    print(x.text)
+    y = requests.post('http://localhost:3000/', json={'key': 'python post'})
+    print(y.text)
+    print('end')
 
-print(x.text)
+def test_db():
+    bottle = Bottle(123456789, 10, '01/01/01', 'fabri')
+    print(str(bottle))
+    save_bottle(bottle)
 
-y = requests.post('http://localhost:3000/', json={'key': 'python post'})
-
-print(y.text)
-
-print('end')
+if __name__ == '__main__':
+    test_db()
+    # generate_tables()
