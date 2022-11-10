@@ -26,6 +26,6 @@ def test_get_saved_data():
 
 
 if __name__ == '__main__':
-    # test_save_data()
+    test_save_data()
     # generate_tables()
     test_get_saved_data()

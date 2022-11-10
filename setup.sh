@@ -2,7 +2,7 @@
 
 echo "Starting project setup"
 
-git clone https://github.com/DuckyCB/reverse-vending-machine_tic5
+# git clone https://github.com/DuckyCB/reverse-vending-machine_tic5
 
 python -m venv venv
 source venv/bin/activate

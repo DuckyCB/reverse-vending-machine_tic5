@@ -53,7 +53,7 @@ def main():
     welcome()
     motor_driver = init_motor_driver()
     detector = init_led_sensor(sensor_pin=17)
-    scale = init_scale(sck=5, dt=6)
+    scale = init_scale(sck=6, dt=5)
     threshold = 10
     while True:
         await_obj_detection(detector, scale, threshold)
@@ -61,8 +61,8 @@ def main():
         camera = start_camera()
         barcode = None
         i = 0
+        barcode, frame = get_barcode(camera, show_camera)
         while i < 50 and barcode is None:
-            # barcode, frame = get_barcode(camera, show_camera)
             # rotate(motor_driver, camera, show_camera)
             barcode, frame = rotate_and_detect(
                 motor_driver, camera, show_camera)
