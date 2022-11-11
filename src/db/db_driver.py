@@ -21,6 +21,12 @@ def query_post(conn, query):
     conn.commit()
 
 
+def query_post_data(conn, query, data):
+    cur = conn.cursor()
+    res = cur.executemany(query, data)
+    conn.commit()
+
+
 def query_get_one(conn, query):
     cur = conn.cursor()
     res = cur.execute(query)

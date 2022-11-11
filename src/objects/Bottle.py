@@ -1,8 +1,8 @@
-
+# TODO: Get correct id for the actual RVM
 def get_rvm():
     return 69
 
-
+# TODO: Generate id using data
 def generate_id(barcode, weight, date, user):
     rvm = get_rvm()
     return str(rvm) + 'ASDFGH'
@@ -18,7 +18,7 @@ class Bottle:
         self.user = user
 
     def __str__(self):
-        return f"""
-        rvm: {self.rvm} - id: {self.id} 
-        barcode: {self.barcode}, weight: {self.weight}, date: {self.date}
-        user: {self.user}"""
+        return f"""---------------
+rvm: {self.rvm} - id: {self.id} 
+barcode: {self.barcode}, weight: {self.weight}, date: {self.date}
+user: {self.user}"""

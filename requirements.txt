@@ -2,3 +2,4 @@ pyzbar
 opencv-python
 requests
 RPi.GPIO
+numpy
