@@ -1,6 +1,7 @@
 import requests
 from objects.Bottle import Bottle
 from db.db_controller import *
+import cv2
 
 
 def test_backend_connection():
@@ -25,7 +26,26 @@ def test_get_saved_data():
     print(bottles)
 
 
+def camera_test():
+    camera = cv2.VideoCapture(0)
+
+    camera.set(cv2.CAP_PROP_FPS, 30.0)
+    camera.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter.fourcc('m', 'j', 'p', 'g'))
+    camera.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter.fourcc('M', 'J', 'P', 'G'))
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    ret, frame = camera.read()
+    while True:
+        ret, frame = camera.read()
+        cv2.imshow('Camera test', frame)
+        if cv2.waitKey(1) & 0xFF == 27:
+            break
+    camera.release()
+    cv2.destroyAllWindows()
+
+
 if __name__ == '__main__':
+    # camera_test()
     # test_save_data()
     # generate_tables()
     test_get_saved_data()
