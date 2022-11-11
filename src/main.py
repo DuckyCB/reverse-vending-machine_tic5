@@ -5,47 +5,16 @@ import RPi.GPIO as GPIO
 from welcome import welcome
 # from camera import Camera, save_picture
 # from object_detection.led_sensor import ObjectDetector
-from bottle_recognition.bottle_recognition import get_barcode, rotate_and_detect, start_camera, init_motor_driver, release_camera, save_data
+from bottle_recognition.bottle_recognition import get_barcode, rotate_and_detect, start_camera, init_motor_driver, release_camera, save_picture
 from object_detection.object_detection import await_no_obj_detection, await_obj_detection, init_led_sensor, init_scale, detect_weight
 # from rotation import MotorDriver
 # from time import sleep
+from db.db_controller import save_bottle
+from objects.Bottle import Bottle
+from datetime import datetime
 
 show_camera = True
 barcode_in_image = True
-
-
-# def main():
-#     GPIO.cleanup()
-#     welcome()
-#     obj_detector = ObjectDetector(sensor_pin=17)
-#     # motor_driver = MotorDriver()
-#     while True:
-#         print(obj_detector.read_input)
-#         if obj_detector.read_input():
-#             camera = Camera()
-#             bottle = True
-#             counter = 0
-#             while bottle:
-#                 frame, barcode = camera.barcode_scanner(
-#                     show_camera, barcode_in_image)
-#                 if barcode is not None:
-#                     time_now = datetime.now()
-#                     current_time = time_now.strftime("%d_%m_%Y-%H_%M_%S")
-#                     save_picture(frame, current_time, barcode)
-#                     # save bottle to db
-#                 else:
-#                     # motor_driver.start_motors()
-#                     # sleep(.5)
-#                     # motor_driver.stop_motors()
-#                     counter += 1
-#                 if frame is None:
-#                     camera.release()
-#                     break
-#                 # the rotation is complete and the bottle has no barcode
-#                 if counter == 20:
-#                     bottle = False
-#                     print('No barcode found')
-#             camera.release()
 
 
 def main():
@@ -71,7 +40,10 @@ def main():
         if barcode is not None:
             weight = detect_weight(scale)
             print(barcode, 'success')
-            save_data(camera, frame, barcode)
+            current_time = datetime.now().strftime("%d_%m_%Y-%H_%M_%S")
+            save_picture(camera, frame, barcode, current_time)
+            bottle = Bottle(barcode, weight, current_time, 'user_hardcoded')
+            save_bottle()
 
         release_camera(camera)
         await_no_obj_detection(detector, scale, threshold)

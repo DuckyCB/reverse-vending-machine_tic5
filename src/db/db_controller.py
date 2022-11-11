@@ -8,7 +8,7 @@ def generate_tables():
     close_connection(conn)
 
 
-def save_bottle(bottle):
+def save_bottle(bottle: Bottle) -> None:
     conn = create_connection()
     data = [
         (
