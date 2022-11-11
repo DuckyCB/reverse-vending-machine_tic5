@@ -1,12 +1,14 @@
-from typing import Union
-from bottle_recognition.camera import Camera
-from bottle_recognition.motor_driver import MotorDriver
-import numpy as np
 from datetime import datetime
 from time import perf_counter
+from typing import Union
+
+import numpy as np
+
+from bottle_recognition.camera import Camera
+from bottle_recognition.motor_driver import MotorDriver
 
 
-def get_barcode(camera: Camera, show_camera: bool=True):
+def get_barcode(camera: Camera, show_camera: bool = True):
     for _ in range(4):
         frame, barcode = camera.read_barcode()
         if show_camera:
@@ -16,7 +18,7 @@ def get_barcode(camera: Camera, show_camera: bool=True):
     return None, None
 
 
-def rotate_and_detect(motor_driver: MotorDriver, camera: Camera, show_camera: bool=True):
+def rotate_and_detect(motor_driver: MotorDriver, camera: Camera, show_camera: bool = True):
     motor_driver.start_motors()
 
     # start = perf_counter()
@@ -27,10 +29,11 @@ def rotate_and_detect(motor_driver: MotorDriver, camera: Camera, show_camera: bo
     #         camera.display_img(frame, None)
     #     current_time = perf_counter()
     barcode, frame = delay_and_detect(.5, camera, show_camera)
-    
+
     motor_driver.stop_motors()
-    
+
     return (barcode, frame) if barcode is not None else delay_and_detect(.5, camera, show_camera)
+
 
 def delay_and_detect(time: float, camera: Camera, show_camera: bool) -> None:
     start = perf_counter()
@@ -41,7 +44,7 @@ def delay_and_detect(time: float, camera: Camera, show_camera: bool) -> None:
         if barcode is not None:
             return barcode, frame
         current_time = perf_counter()
-    
+
     return None, None
 
 
@@ -55,7 +58,6 @@ def init_motor_driver() -> MotorDriver:
     return motor_driver
 
 
-
 def release_camera(camera: Camera) -> None:
     camera.release()
 
@@ -63,4 +65,3 @@ def release_camera(camera: Camera) -> None:
 def save_data(camera: Camera, frame: np.array, barcode: str) -> None:
     current_time = datetime.now().strftime("%d_%m_%Y-%H_%M_%S")
     camera.save_picture(frame, current_time, barcode)
-    

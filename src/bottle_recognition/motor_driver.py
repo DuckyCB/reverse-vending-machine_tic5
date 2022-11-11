@@ -7,7 +7,8 @@ en1 = 25
 
 en2 = 16
 in3 = 20
-in4 = 21 
+in4 = 21
+
 
 class MotorDriver:
     def __init__(self):
@@ -17,13 +18,13 @@ class MotorDriver:
         GPIO.setup(en1, GPIO.OUT)
         GPIO.output(in1, GPIO.LOW)
         GPIO.output(in2, GPIO.LOW)
-        
+
         GPIO.setup(in3, GPIO.OUT)
         GPIO.setup(in4, GPIO.OUT)
         GPIO.setup(en2, GPIO.OUT)
         GPIO.output(in3, GPIO.LOW)
         GPIO.output(in4, GPIO.LOW)
-        
+
         self.p1 = GPIO.PWM(en1, 1000)
         self.p1.start(50)
 
@@ -41,6 +42,7 @@ class MotorDriver:
         GPIO.output(in2, GPIO.LOW)
         GPIO.output(in3, GPIO.LOW)
         GPIO.output(in4, GPIO.LOW)
+
 
 if __name__ == '__main__':
     driver = MotorDriver()

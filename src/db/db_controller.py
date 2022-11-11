@@ -1,9 +1,11 @@
 from db.db_driver import *
 
+
 def generate_tables():
     conn = create_connection()
     query = 'CREATE TABLE bottle(id, barcode, weight, rvm, date, user)'
     query_post(conn, query)
+
 
 def save_bottle(new_bottle):
     conn = create_connection()

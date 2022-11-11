@@ -17,6 +17,7 @@ def start_camera() -> None:
     camera.set(cv.CAP_PROP_BUFFERSIZE, 1)
     return camera
 
+
 def append_barcode_to_frame(frame: np.array, barcode) -> np.array:
     x, y, w, h = barcode.rect
     cv.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
@@ -38,14 +39,11 @@ class Camera:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-
     def __init__(self):
         self.camera = start_camera()
 
-
     def read_frame(self):
         return self.camera.read()
-
 
     def read_barcode(self):
         ret, frame = self.read_frame()
@@ -55,7 +53,6 @@ class Camera:
         barcode = read_barcode(frame)
         return frame, barcode
 
-
     def display_img(self, frame: np.array, barcode):
         # if barcode is not None:
         #     frame = append_barcode_to_frame(frame, barcode)
@@ -64,12 +61,10 @@ class Camera:
         if cv.waitKey(1) & 0xFF == 27:
             return
 
-    
     def release(self):
         self.camera.release()
         cv.destroyAllWindows()
 
-    
     def save_picture(self, frame: np.array, current_time: str, barcode: str):
         path = OUTPUT_FILE_DIR
         img_file = os.path.join(path, f"img/{current_time}.jpg")

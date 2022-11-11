@@ -4,6 +4,7 @@ from hx711 import HX711
 
 referenceUnit = 1
 
+
 def setup_scale(sck: int, dt: int) -> HX711:
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(sck, GPIO.IN)

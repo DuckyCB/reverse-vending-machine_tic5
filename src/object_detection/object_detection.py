@@ -5,7 +5,7 @@ from object_detection.scale import Scale
 n_of_detections = 10
 
 
-def init_led_sensor(sensor_pin: int=17) -> ObjectDetector:
+def init_led_sensor(sensor_pin: int = 17) -> ObjectDetector:
     detector = ObjectDetector(sensor_pin)
     print("Led sensor module initialized")
     return detector
@@ -32,12 +32,11 @@ def object_not_placed(scale: Scale, threshold: int):
 def await_obj_state(detector: ObjectDetector, state: str, scale: Scale, threshold: int) -> None:
     states_dict = {"no_obj": [0, object_placed], "obj": [1, object_not_placed]}
 
-
     detections_left = n_of_detections
     while detections_left > 0:
         if detector.read_input() == states_dict[state][0]:
             detections_left -= 1
-    
+
     while states_dict[state][1](scale, threshold):
         pass
 
