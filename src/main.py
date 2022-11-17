@@ -12,6 +12,7 @@ from object_detection.object_detection import await_no_obj_detection, await_obj_
 from db.db_controller import save_bottle
 from objects.Bottle import Bottle
 from datetime import datetime
+from alerts import success_alert, error_alert
 
 show_camera = True
 barcode_in_image = True
@@ -45,8 +46,11 @@ def main():
                 save_picture(camera, frame, barcode, current_time)
                 bottle = Bottle(barcode.data, weight, current_time, 'user_hardcoded')
                 save_bottle(bottle)
+                success_alert(barcode.data)
 
             release_camera(camera)
+            if barcode is None:
+                error_alert()
             await_no_obj_detection(detector, scale, threshold)
     except KeyboardInterrupt:
         GPIO.cleanup()
